@@ -1,0 +1,7 @@
+{
+    "yaml.schemas": {
+        "kubernetes": "*.yaml",
+        "azuredevops": "*/.azure-pipelines/*.yml",
+        "https://github.com/helmwave/helmwave/releases/latest/download/schema.json": "file:///Users/hameedgoudat/2025/devops/adaptive-app/values.yaml"
+    }
+}
