@@ -5,15 +5,17 @@ metadata:
   namespace: adaptive-app
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-uat
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
 
 spec:
   tls:
   - hosts:
-    - uat.adaptive-suite.com  # or your custom domain
+    - www.adaptive-uxui.com  # or your custom domain
     secretName: adaptive-app-tls
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
-  - host: uat.adaptive-suite.com
+  - host: www.adaptive-uxui.com
     http:
       paths:
       - backend:
