@@ -4,32 +4,21 @@ metadata:
   name: adaptive-app
   namespace: adaptive-app
   annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-uat
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-Host $host;
 
-
 spec:
   tls:
   - hosts:
-    - uat.dekraserv.com  # or your custom domain
-    - www.adaptive-uxui.com
-    secretName: adaptive-app-tls
+    - uat.dekra-dev.com  # or your custom domain
+    secretName: tls-secret
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
-  - host: uat.dekraserv.com
-    http:
-      paths:
-      - backend:
-          service:
-            name: adaptive-app
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
-  - host: www.adaptive-uxui.com
+  - host: uat.dekra-dev.com
     http:
       paths:
       - backend:

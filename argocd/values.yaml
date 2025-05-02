@@ -7,11 +7,11 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: adaptivebbs.azurecr.io/dekrase/adaptiveplatform
+  repository: argoproj/argocd
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "uateast"
+  tag: "v2.6.15"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -58,25 +58,20 @@ service:
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
-  enabled: true
-  className: "webapprouting.kubernetes.azure.com"
-  annotations: 
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: letsencrypt-uat
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header X-Host $host;
-
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: uat.dekraserv.com
+    - host: chart-example.local
       paths:
         - path: /
-          pathType: Prefix
-  tls: 
-    - secretName: adaptive-app-tls
-      hosts:
-        - uat.dekraserv.com
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
 resources: 
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -126,8 +121,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-env:
-  - name: Environment
-    value: "UAT"
 
